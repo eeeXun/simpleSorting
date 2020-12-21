@@ -15,6 +15,8 @@ int main(){
     for(int i:arr){
         cout<<i<<endl;
     }
+
+    return 0;
 }
 
 void generate_arr(vector<int>& arr){

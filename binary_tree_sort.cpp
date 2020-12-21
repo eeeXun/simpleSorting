@@ -3,24 +3,26 @@
 #include<ctime>
 using namespace std;
 
-struct Node{
-    Node* left;
-    Node* right;
+struct TreeNode{
+    TreeNode* left;
+    TreeNode* right;
     int data;
 };
 
-void generate_arr(vector<int>& arr);
-void createTree(Node*&,vector<int>);
-void insert(Node*&,int);
-void printTree(Node*);
+void generate_arr(vector<int>&);
+void createTree(TreeNode*&,vector<int>);
+void insert(TreeNode*&,int);
+void printTree(TreeNode*);
 
 int main(){
     srand(time(NULL));
     vector<int> arr;
     generate_arr(arr);
-    Node* tree=nullptr;
-    createTree(tree,arr);
-    printTree(tree);
+    TreeNode* node=nullptr;
+    createTree(node,arr);
+    printTree(node);
+
+    return 0;
 }
 
 void generate_arr(vector<int>& arr){
@@ -29,52 +31,32 @@ void generate_arr(vector<int>& arr){
     }
 }
 
-void createTree(Node*& tree,vector<int> arr){
+void createTree(TreeNode*& tree,vector<int> arr){
     for(int num:arr){
         insert(tree,num);
     }
 }
 
-void insert(Node*& tree,int num){
-    if(tree==nullptr){
-        Node* tmp=new Node;
-        tree=tmp;
-        tree->left=nullptr;
-        tree->right=nullptr;
-        tree->data=num;
+void insert(TreeNode*& node,int num){
+    if(node==nullptr){
+        TreeNode* tmp=new TreeNode;
+        node=tmp;
+        node->left=nullptr;
+        node->right=nullptr;
+        node->data=num;
+    }
+    else if(num<node->data){
+        insert(node->left,num);
     }
     else{
-        if(num<tree->data){
-            if(tree->left==nullptr){
-                Node* tmp=new Node;
-                tree->left=tmp;
-                tmp->left=nullptr;
-                tmp->right=nullptr;
-                tmp->data=num;
-            }
-            else{
-                insert(tree->left,num);
-            }
-        }
-        else{
-            if(tree->right==nullptr){
-                Node* tmp=new Node;
-                tree->right=tmp;
-                tmp->left=nullptr;
-                tmp->right=nullptr;
-                tmp->data=num;
-            }
-            else{
-                insert(tree->right,num);
-            }
-        }
+        insert(node->right,num);
     }
 }
 
-void printTree(Node* tree){
-    if(tree!=nullptr){
-        printTree(tree->left);
-        cout<<tree->data<<endl;
-        printTree(tree->right);
+void printTree(TreeNode* node){
+    if(node!=nullptr){
+        printTree(node->left);
+        cout<<node->data<<endl;
+        printTree(node->right);
     }
 }
